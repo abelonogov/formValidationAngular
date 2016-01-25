@@ -1,0 +1,66 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>Form Validation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+  <script src="js/script.js"></script>
+</head>
+<body ng-app="validationApp">
+  <div class="container" ng-controller="mainController">
+    <p>
+      Please fill in fields bellow
+    </p>
+    <form name="myForm" id="submit_form">
+      <ul>
+        <li>
+          <input ng-model="user.login" name="userLogin" type="text" ng-minlength="3" ng-maxlength="16" placeholder="Login" required/>
+          <div role="alert">
+            <span class="ok" ng-show="myForm.userLogin.$valid"></span>
+            <span class="error" ng-show="myForm.userLogin.$error.minlength || myForm.userLogin.$error.maxlength"
+              data-after="Login length should be more than 3 and less than 16 symbols">
+            </span>
+          </div>
+        </li>
+        <li>
+          <input ng-model="user.email" ng-pattern="/^[a-z0-9\._\+-]+@([a-z0-9\._\+-]+\.)+[a-z0-9\._\+-]+$/i" type="email" name="userEmail" placeholder="Email" required/>
+          <div role="alert">
+            <span class="ok" ng-show="myForm.userEmail.$valid"></span>
+            <span class="error" ng-show="myForm.userEmail.$error.pattern"
+              data-after="Please provide correct email address">
+            </span>
+          </div>
+        </li>
+        <li>
+          <input ng-model="user.password" name="userPassword" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" type="password" placeholder="Password" required/>
+          <div role="alert">
+            <span class="ok" ng-show="myForm.userPassword.$valid"></span>
+            <span class="error" ng-show="myForm.userPassword.$error.pattern"
+              data-after="Password should contains at least one number, one lowercase and one uppercase letter at least eight characters">
+            </span>
+          </div>
+        </li>
+        <li>
+          <input ng-model="user.confirm_password" name="userConfirmPassword" type="password" placeholder="Confirm Password" required/>
+          <div role="alert">
+            <span class="ok" ng-show="user.confirm_password != '' && user.password == user.confirm_password"></span>
+            <span class="error" ng-show="user.confirm_password != '' && user.password != user.confirm_password"
+              data-after="Password confirmation should mutch password">
+            </span>
+          </div>
+        </li>
+        <li>
+          <input ng-model="user.phone" type="tel" name="userPhone" ng-pattern="/^[\d][\(\)\w+\-.]{10,}$/" placeholder="Phone number" required/>
+          <div role="alert">
+            <span class="ok" ng-show="myForm.userPhone.$valid"></span>
+            <span class="error" ng-show="myForm.userPhone.$error.pattern"
+              data-after="Phone number should contains digits numbers">
+            </span>
+          </div>
+        </li>
+        <li><input ng-disabled="myForm.$invalid" type="submit"/></li>
+      </ul>
+    </form>
+  </div>
+</body>
+</html>
